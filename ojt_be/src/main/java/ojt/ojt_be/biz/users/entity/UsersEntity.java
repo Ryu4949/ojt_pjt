@@ -1,4 +1,4 @@
-package ojt.ojt_be.users.entity;
+package ojt.ojt_be.biz.users.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
