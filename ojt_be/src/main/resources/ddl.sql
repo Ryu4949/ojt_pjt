@@ -1,4 +1,4 @@
-CREATE TABLE MEMBER
+CREATE TABLE USERS
 (
 	id int PRIMARY KEY AUTO_INCREMENT,
 	name VARCHAR(10),
@@ -10,5 +10,5 @@ CREATE TABLE MEMBER
 	start_date DATE,
 	last_change_date DATE,
 	use_account boolean
-)
+);
 
