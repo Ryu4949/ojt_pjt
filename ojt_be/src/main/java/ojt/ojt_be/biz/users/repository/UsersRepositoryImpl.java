@@ -32,7 +32,12 @@ public class UsersRepositoryImpl implements UsersRepository {
         return user;
     }
 
+    @Override
     public void delete(Integer id) {
         store.remove(id);
+    }
+
+    public void clearStore() {
+        store.clear();
     }
 }

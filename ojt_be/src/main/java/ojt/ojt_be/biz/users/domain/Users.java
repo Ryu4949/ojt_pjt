@@ -1,9 +1,14 @@
 package ojt.ojt_be.biz.users.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Users {
 
     private Integer id;
