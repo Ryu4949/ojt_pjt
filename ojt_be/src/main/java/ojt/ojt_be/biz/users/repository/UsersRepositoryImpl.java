@@ -28,7 +28,9 @@ public class UsersRepositoryImpl implements UsersRepository {
 
     @Override
     public Users update(Users user) {
-        store.put(user.getId(), user);
+        Integer userId = findByUserId(user.getUserId()).get().getId();
+        user.setId(userId);
+        store.put(userId, user);
         return user;
     }
 

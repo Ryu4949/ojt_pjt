@@ -5,6 +5,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,16 +21,7 @@ class UsersRepositoryImplTest {
 
     @Test
     void save() {
-        Users newUser = new Users();
-        newUser.setUserId("kyong");
-        newUser.setEmail("khr@mail.com");
-        newUser.setName("gaengha");
-        newUser.setPassword("1234");
-        newUser.setDepartment("architect");
-        newUser.setRankName("sawon");
-        newUser.setStartDate(LocalDate.now());
-        newUser.setLastChangeDate(LocalDate.now());
-        newUser.setUseAccount(false);
+        Users newUser = new Users("kyong", "khr@mail.com", "gaengha", "1234", "architect", "sawon", LocalDate.now(), LocalDate.now(), false);
 
         usersRepository.save(newUser);
 
@@ -40,17 +33,55 @@ class UsersRepositoryImplTest {
 
     @Test
     void findAll() {
+        Users user1 = new Users("kyong", "khr@mail.com", "gaengha", "1234", "architect", "sawon", LocalDate.now(), LocalDate.now(), false);
+        Users user2 = new Users("kyong2", "khr2@mail.com", "gaengha22", "1234", "architect", "sawon", LocalDate.now(), LocalDate.now(), false);
+
+        usersRepository.save(user1);
+        usersRepository.save(user2);
+
+        List<Users> result = usersRepository.findAll();
+        assertEquals(2, result.size());
+
     }
 
     @Test
     void findByUserId() {
+        Users newUser = new Users("kyong", "khr@mail.com", "gaengha", "1234", "architect", "sawon", LocalDate.now(), LocalDate.now(), false);
+        usersRepository.save(newUser);
+
+        Users result1 = usersRepository.findByUserId("gaengha").get();
+        Optional<Users> result2 = usersRepository.findByUserId("kyungha");
+
+        assertEquals(newUser, result1);
+        assertEquals(Optional.empty(), result2);
+
     }
 
     @Test
     void update() {
+        Users newUser = new Users("kyong", "khr@mail.com", "gaengha", "1234", "architect", "sawon", LocalDate.now(), LocalDate.now(), false);
+        usersRepository.save(newUser);
+        Integer result1 = newUser.getId();
+
+        Users updateUser = new Users("kyongha", "khr@mail.com", "gaengha", "1234", "architect", "sawon", LocalDate.now(), LocalDate.now(), false);
+        Users result2 = usersRepository.update(updateUser);
+
+        System.out.println(result2);
+
+        assertEquals(result1, result2.getId());
+        assertNotEquals(newUser.getName(), result2.getName());
+
     }
 
     @Test
     void delete() {
+        Users newUser = new Users("kyong", "khr@mail.com", "gaengha", "1234", "architect", "sawon", LocalDate.now(), LocalDate.now(), false);
+        usersRepository.save(newUser);
+
+        usersRepository.delete(newUser.getId());
+
+        Optional<Users> result = usersRepository.findByUserId(newUser.getUserId());
+
+        assertEquals(Optional.empty(), result);
     }
 }

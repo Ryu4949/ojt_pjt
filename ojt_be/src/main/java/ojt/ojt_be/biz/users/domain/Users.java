@@ -21,4 +21,16 @@ public class Users {
     private LocalDate startDate;
     private LocalDate lastChangeDate;
     private boolean useAccount;
+
+    public Users(String name, String email, String userId, String password, String department, String rankName, LocalDate startDate, LocalDate lastChangeDate, boolean useAccount) {
+        this.name = name;
+        this.email = email;
+        this.userId = userId;
+        this.password = password;
+        this.department = department;
+        this.rankName = rankName;
+        this.startDate = startDate;
+        this.lastChangeDate = lastChangeDate;
+        this.useAccount = useAccount;
+    }
 }
