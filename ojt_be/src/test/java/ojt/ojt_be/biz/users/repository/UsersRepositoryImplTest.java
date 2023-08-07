@@ -3,6 +3,7 @@ package ojt.ojt_be.biz.users.repository;
 import ojt.ojt_be.biz.users.domain.Users;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UsersRepositoryImplTest {
 
+    @Autowired
     UsersRepositoryImpl usersRepository = new UsersRepositoryImpl();
 
     @AfterEach
