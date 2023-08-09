@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="maven.maven_pjt.biz.users.UsersMapper">
+    <select id="findAllUsers" parameterType="maven.maven_pjt.biz.users.dto.UsersInfoDto" resultType="List">
+        SELECT
+            name,
+            email,
+            department,
+            rankName,
+            startDate
+        FROM
+            test.USERS;
+    </select>
+</mapper>
