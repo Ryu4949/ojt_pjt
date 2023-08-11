@@ -1,6 +1,7 @@
 package maven.maven_pjt.biz.users;
 
 import maven.maven_pjt.biz.users.dto.UpdateUserDto;
+import maven.maven_pjt.biz.users.dto.UserSignUpDto;
 import maven.maven_pjt.biz.users.dto.UsersInfoDto;
 import maven.maven_pjt.biz.users.entity.Users;
 import org.apache.ibatis.annotations.Mapper;
@@ -19,4 +20,9 @@ public interface UsersMapper {
     UsersInfoDto updateUser(UpdateUserDto updateUserDto);
 
     Integer deleteUser(Integer userId);
+
+    void signUpUser(UserSignUpDto userSignUpDto);
+
+    Integer getLastUserId();
+
 }

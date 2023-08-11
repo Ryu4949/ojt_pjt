@@ -1,6 +1,7 @@
 package maven.maven_pjt.biz.users;
 
 import maven.maven_pjt.biz.users.dto.UpdateUserDto;
+import maven.maven_pjt.biz.users.dto.UserSignUpDto;
 import maven.maven_pjt.biz.users.dto.UsersInfoDto;
 import maven.maven_pjt.biz.users.entity.Users;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,13 @@ public class UsersService {
             usersMapper.deleteUser(userId);
             return userId;
         }
+    }
+
+    public void signUpUser(UserSignUpDto userSignUpDto) {
+        usersMapper.signUpUser(userSignUpDto);
+    }
+
+    public Integer getNewUserId() {
+        return usersMapper.getLastUserId()+1;
     }
 }

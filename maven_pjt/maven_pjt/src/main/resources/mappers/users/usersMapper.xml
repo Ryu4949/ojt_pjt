@@ -54,4 +54,19 @@
         WHERE
             id = #{userId};
     </select>
+    <select id="signUpUser" parameterType="maven.maven_pjt.biz.users.dto.UserSignUpDto">
+        INSERT INTO
+            USERS
+        VALUES
+            (#{id}, #{name}, #{email}, #{userId}, #{password}, #{department}, #{rankName}, NOW(), NOW(), FALSE);
+    </select>
+    <select id="getLastUserId" resultType="Integer">
+        SELECT
+            id
+        FROM
+            USERS
+        ORDER BY
+            id DESC
+        LIMIT 1;
+    </select>
 </mapper>

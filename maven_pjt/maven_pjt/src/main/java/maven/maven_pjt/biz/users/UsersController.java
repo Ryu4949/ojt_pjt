@@ -1,7 +1,10 @@
 package maven.maven_pjt.biz.users;
 
+import lombok.Builder;
 import maven.maven_pjt.biz.users.dto.UpdateUserDto;
+import maven.maven_pjt.biz.users.dto.UserSignUpDto;
 import maven.maven_pjt.biz.users.dto.UsersInfoDto;
+import maven.maven_pjt.biz.users.entity.Users;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,6 +50,24 @@ public class UsersController {
         Integer result = usersService.deleteUser(userId);
 
         return new ResponseEntity(result, status);
+    }
+
+    @PostMapping("/")
+    public ResponseEntity signUpUser(@RequestBody UserSignUpDto userSignUpDto) {
+        HttpStatus status = HttpStatus.CREATED;
+
+        UserSignUpDto newUser = userSignUpDto;
+        Integer newUserId = usersService.getNewUserId();
+        newUser.setId(newUserId);
+        System.out.println("-------------------");
+        System.out.println(newUser);
+        System.out.println("----------------------");
+
+        usersService.signUpUser(newUser);
+        UsersInfoDto result = usersService.getUserDetail(newUserId);
+
+        return new ResponseEntity(result, status);
+
     }
 
 }
