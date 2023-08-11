@@ -9,4 +9,6 @@ import java.util.List;
 public interface UsersMapper {
 
     List<UsersInfoDto> findAllUsers();
+
+    UsersInfoDto getUserDetail(Integer userId);
 }

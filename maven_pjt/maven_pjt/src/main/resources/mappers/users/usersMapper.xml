@@ -13,4 +13,16 @@
         FROM
             USERS;
     </select>
+    <select id="getUserDetail" resultType="maven.maven_pjt.biz.users.dto.UsersInfoDto" parameterType="Integer">
+        SELECT
+            id,
+            name,
+            email,
+            department,
+            rank_name,
+            start_date
+        FROM
+            USERS
+        WHERE id = #{userId};
+    </select>
 </mapper>

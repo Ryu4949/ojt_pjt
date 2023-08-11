@@ -15,4 +15,6 @@ public class UsersService {
     public List<UsersInfoDto> findAllUsersInfo() {
         return usersMapper.findAllUsers();
     }
+
+    public UsersInfoDto getUserDetail(Integer userId) { return usersMapper.getUserDetail(userId);}
 }
