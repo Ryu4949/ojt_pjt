@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="maven.maven_pjt.biz.users.UsersMapper">
+    <select id="getUserById" resultType="maven.maven_pjt.biz.users.entity.Users" parameterType="Integer">
+        SELECT
+            *
+        FROM
+            USERS
+        WHERE
+            id = #{userId};
+    </select>
     <select id="findAllUsers" resultType="hashmap">
         SELECT
             id,
@@ -20,9 +28,25 @@
             email,
             department,
             rank_name,
-            start_date
+            start_date,
+            last_change_date
         FROM
             USERS
-        WHERE id = #{userId};
+        WHERE
+            id = #{userId};
+    </select>
+    <select id="updateUser" resultType="maven.maven_pjt.biz.users.dto.UsersInfoDto" parameterType="maven.maven_pjt.biz.users.dto.UpdateUserDto">
+        UPDATE
+            USERS
+        SET
+            name = #{name},
+            email = #{email},
+            password = #{password},
+            department = #{department},
+            rank_name = #{rankName},
+            last_change_date = NOW()
+        WHERE
+            id = #{id};
+
     </select>
 </mapper>
