@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class UsersInfoDto {
 
+    private Integer id;
     private String name;
     private String email;
     private String department;

@@ -4,6 +4,7 @@
 <mapper namespace="maven.maven_pjt.biz.users.UsersMapper">
     <select id="findAllUsers" resultType="hashmap">
         SELECT
+            id,
             name,
             email,
             department,

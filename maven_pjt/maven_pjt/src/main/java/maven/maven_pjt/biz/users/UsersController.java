@@ -21,7 +21,7 @@ public class UsersController {
     public ResponseEntity getAllUsers() {
         HttpStatus status = HttpStatus.OK;
         List<UsersInfoDto> result = usersService.findAllUsersInfo();
-//        String result = "Hello World";
         return new ResponseEntity<>(result, status);
     }
+
 }
