@@ -47,6 +47,11 @@
             last_change_date = NOW()
         WHERE
             id = #{id};
-
+    </select>
+    <select id="deleteUser" resultType="Integer" parameterType="Integer">
+        DELETE FROM
+            USERS
+        WHERE
+            id = #{userId};
     </select>
 </mapper>

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsersService {
@@ -23,5 +24,16 @@ public class UsersService {
 
     public UsersInfoDto updateUser(UpdateUserDto updateUserDto) {
         return usersMapper.updateUser(updateUserDto);
+    }
+
+    public Integer deleteUser(Integer userId) {
+        Users targetUser = getUserById(userId);
+
+        if(targetUser == null) {
+            return 0;
+        } else {
+            usersMapper.deleteUser(userId);
+            return userId;
+        }
     }
 }

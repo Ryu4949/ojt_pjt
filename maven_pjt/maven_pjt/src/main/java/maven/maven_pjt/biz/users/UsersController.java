@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user-service")
+@RequestMapping("/user-service/users")
 public class UsersController {
 
     @Autowired
     UsersService usersService;
 
-    @GetMapping("/users")
+    @GetMapping("/")
     public ResponseEntity getAllUsers() {
         HttpStatus status = HttpStatus.OK;
         List<UsersInfoDto> result = usersService.findAllUsersInfo();
         return new ResponseEntity<>(result, status);
     }
 
-    @GetMapping("/users/{user_id}")
+    @GetMapping("/{user_id}")
     public ResponseEntity getUserDetail(@PathVariable("user_id") Integer userId) {
         HttpStatus status = HttpStatus.OK;
         UsersInfoDto result = usersService.getUserDetail(userId);
@@ -32,11 +32,19 @@ public class UsersController {
         return new ResponseEntity(result, status);
     }
 
-    @PutMapping("/users/{user_id}")
+    @PutMapping("/{user_id}")
     public ResponseEntity updateUser(@PathVariable("user_id") Integer userId, @RequestBody UpdateUserDto updateUserDto) {
         HttpStatus status = HttpStatus.OK;
         usersService.updateUser(updateUserDto);
         UsersInfoDto result = usersService.getUserDetail(userId);
+
+        return new ResponseEntity(result, status);
+    }
+
+    @DeleteMapping("/{user_id}")
+    public ResponseEntity deleteUser(@PathVariable("user_id") Integer userId) {
+        HttpStatus status = HttpStatus.NO_CONTENT;
+        Integer result = usersService.deleteUser(userId);
 
         return new ResponseEntity(result, status);
     }

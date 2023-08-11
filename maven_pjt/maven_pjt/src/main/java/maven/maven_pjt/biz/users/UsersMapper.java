@@ -17,4 +17,6 @@ public interface UsersMapper {
     UsersInfoDto getUserDetail(Integer userId);
 
     UsersInfoDto updateUser(UpdateUserDto updateUserDto);
+
+    Integer deleteUser(Integer userId);
 }
