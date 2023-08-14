@@ -59,9 +59,9 @@ public class UsersController {
         UserSignUpDto newUser = userSignUpDto;
         Integer newUserId = usersService.getNewUserId();
         newUser.setId(newUserId);
-        System.out.println("-------------------");
-        System.out.println(newUser);
-        System.out.println("----------------------");
+//        System.out.println("-------------------");
+//        System.out.println(newUser);
+//        System.out.println("----------------------");
 
         usersService.signUpUser(newUser);
         UsersInfoDto result = usersService.getUserDetail(newUserId);

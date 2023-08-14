@@ -4,6 +4,7 @@ import maven.maven_pjt.biz.users.dto.UpdateUserDto;
 import maven.maven_pjt.biz.users.dto.UserSignUpDto;
 import maven.maven_pjt.biz.users.dto.UsersInfoDto;
 import maven.maven_pjt.biz.users.entity.Users;
+import maven.maven_pjt.biz.users.exception.UserAlreadySignedUpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +39,14 @@ public class UsersService {
         }
     }
 
-    public void signUpUser(UserSignUpDto userSignUpDto) {
+    public void signUpUser(UserSignUpDto userSignUpDto) throws UserAlreadySignedUpException {
+        System.out.println("--------------------");
+        System.out.println(usersMapper.getUserByUserId(userSignUpDto.getUserId()));
+        System.out.println("--------------------");
+
+        if (usersMapper.getUserByUserId(userSignUpDto.getUserId()) != null) {
+            throw new UserAlreadySignedUpException();
+        }
         usersMapper.signUpUser(userSignUpDto);
     }
 

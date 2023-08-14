@@ -7,6 +7,7 @@ import maven.maven_pjt.biz.users.entity.Users;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface UsersMapper {
@@ -24,5 +25,7 @@ public interface UsersMapper {
     void signUpUser(UserSignUpDto userSignUpDto);
 
     Integer getLastUserId();
+
+    Users getUserByUserId(String userId);
 
 }
