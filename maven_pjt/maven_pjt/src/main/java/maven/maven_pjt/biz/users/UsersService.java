@@ -5,6 +5,7 @@ import maven.maven_pjt.biz.users.dto.UserSignUpDto;
 import maven.maven_pjt.biz.users.dto.UsersInfoDto;
 import maven.maven_pjt.biz.users.entity.Users;
 import maven.maven_pjt.biz.users.exception.UserAlreadySignedUpException;
+import maven.maven_pjt.biz.users.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,11 +29,11 @@ public class UsersService {
         return usersMapper.updateUser(updateUserDto);
     }
 
-    public Integer deleteUser(Integer userId) {
+    public Integer deleteUser(Integer userId) throws UserNotFoundException {
         Users targetUser = getUserById(userId);
 
         if(targetUser == null) {
-            return 0;
+            throw new UserNotFoundException();
         } else {
             usersMapper.deleteUser(userId);
             return userId;

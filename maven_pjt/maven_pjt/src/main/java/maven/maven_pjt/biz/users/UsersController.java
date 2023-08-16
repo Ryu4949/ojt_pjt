@@ -6,6 +6,7 @@ import maven.maven_pjt.biz.users.dto.UserSignUpDto;
 import maven.maven_pjt.biz.users.dto.UsersInfoDto;
 import maven.maven_pjt.biz.users.entity.Users;
 import maven.maven_pjt.biz.users.exception.UserAlreadySignedUpException;
+import maven.maven_pjt.biz.users.exception.UserNotFoundException;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,11 +47,17 @@ public class UsersController {
     }
 
     @DeleteMapping("/{user_id}")
-    public ResponseEntity deleteUser(@PathVariable("user_id") Integer userId) {
-        HttpStatus status = HttpStatus.NO_CONTENT;
-        Integer result = usersService.deleteUser(userId);
+    public ResponseEntity deleteUser(@PathVariable("user_id") Integer userId) throws UserNotFoundException {
+        try {
+            HttpStatus status = HttpStatus.NO_CONTENT;
+            Integer result = usersService.deleteUser(userId);
+            return new ResponseEntity(result, status);
 
-        return new ResponseEntity(result, status);
+        } catch (UserNotFoundException e) {
+            HttpStatus status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity(e.getMessage(), status);
+        }
+
     }
 
     @PostMapping("/")
