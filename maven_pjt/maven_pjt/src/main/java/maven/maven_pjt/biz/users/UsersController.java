@@ -55,16 +55,23 @@ public class UsersController {
 
     @PostMapping("/")
     public ResponseEntity signUpUser(@RequestBody UserSignUpDto userSignUpDto) throws UserAlreadySignedUpException {
-        HttpStatus status = HttpStatus.CREATED;
 
         UserSignUpDto newUser = userSignUpDto;
         Integer newUserId = usersService.getNewUserId();
         newUser.setId(newUserId);
 
-        usersService.signUpUser(newUser);
-        UsersInfoDto result = usersService.getUserDetail(newUserId);
+        try {
+            usersService.signUpUser(newUser);
+            UsersInfoDto result = usersService.getUserDetail(newUserId);
+            HttpStatus status = HttpStatus.CREATED;
+            return new ResponseEntity(result, status);
 
-        return new ResponseEntity(result, status);
+        } catch (UserAlreadySignedUpException e) {
+            String result = e.getMessage();
+            HttpStatus status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity(result, status);
+        }
+
 
     }
 
