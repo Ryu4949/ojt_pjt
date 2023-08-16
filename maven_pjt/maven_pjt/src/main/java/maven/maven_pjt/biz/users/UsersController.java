@@ -5,6 +5,7 @@ import maven.maven_pjt.biz.users.dto.UpdateUserDto;
 import maven.maven_pjt.biz.users.dto.UserSignUpDto;
 import maven.maven_pjt.biz.users.dto.UsersInfoDto;
 import maven.maven_pjt.biz.users.entity.Users;
+import maven.maven_pjt.biz.users.exception.UserAlreadySignedUpException;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,15 +54,12 @@ public class UsersController {
     }
 
     @PostMapping("/")
-    public ResponseEntity signUpUser(@RequestBody UserSignUpDto userSignUpDto) {
+    public ResponseEntity signUpUser(@RequestBody UserSignUpDto userSignUpDto) throws UserAlreadySignedUpException {
         HttpStatus status = HttpStatus.CREATED;
 
         UserSignUpDto newUser = userSignUpDto;
         Integer newUserId = usersService.getNewUserId();
         newUser.setId(newUserId);
-//        System.out.println("-------------------");
-//        System.out.println(newUser);
-//        System.out.println("----------------------");
 
         usersService.signUpUser(newUser);
         UsersInfoDto result = usersService.getUserDetail(newUserId);

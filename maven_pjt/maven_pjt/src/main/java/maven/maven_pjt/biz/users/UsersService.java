@@ -40,10 +40,6 @@ public class UsersService {
     }
 
     public void signUpUser(UserSignUpDto userSignUpDto) throws UserAlreadySignedUpException {
-        System.out.println("--------------------");
-        System.out.println(usersMapper.getUserByUserId(userSignUpDto.getUserId()));
-        System.out.println("--------------------");
-
         if (usersMapper.getUserByUserId(userSignUpDto.getUserId()) != null) {
             throw new UserAlreadySignedUpException();
         }

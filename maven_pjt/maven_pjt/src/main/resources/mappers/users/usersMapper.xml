@@ -69,15 +69,17 @@
             id DESC
         LIMIT 1;
     </select>
-    <select id="getUserByUserId" parameterType="String" resultType="maven.maven_pjt.biz.users.dto.UsersInfoDto">
+    <select id="getUserByUserId" parameterType="String" resultType="maven.maven_pjt.biz.users.entity.Users">
         SELECT
             id,
             name,
             email,
+            password,
             department,
             rank_name,
             start_date,
-            last_change_date
+            last_change_date,
+            use_account
         FROM
             USERS
         WHERE
