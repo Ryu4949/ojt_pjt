@@ -4,6 +4,9 @@ import requests from '../../api/requests';
 
 const MainPage = () => {
     const [searchId, setSearchId] = useState(0);
+    const [userInfo, setUserInfo] = useState({});
+
+    // api 연결 확인용입니다.
 
     useEffect(() => {
         if(searchId > 0) {
@@ -19,6 +22,8 @@ const MainPage = () => {
         try {
             const response = await axios.get(`/user-service/users/${userId}`);
             console.log(response);
+            setUserInfo(response.data);
+            console.log('userInfo: ', userInfo);
         } catch(error) {
             console.log(error);
         }
@@ -30,7 +35,6 @@ const MainPage = () => {
         <input 
             onChange={handleChange}
             className='nav__input' type="text" placeholder="검색해주세요."/>
-        <button onClick={getUserDetail}>검색</button>
     </div>
   )
 }
