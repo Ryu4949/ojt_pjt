@@ -12,7 +12,7 @@ const MainPage = () => {
         if(searchId > 0) {
             getUserDetail(searchId)
         }
-    })
+    }, [searchId])
     
     const handleChange = (e) => {
         setSearchId(e.target.value);
@@ -20,10 +20,10 @@ const MainPage = () => {
 
     const getUserDetail = async (userId) => {
         try {
-            const response = await axios.get(`/user-service/users/${userId}`);
-            console.log(response);
-            setUserInfo(response.data);
-            console.log('userInfo: ', userInfo);
+            await axios.get(`/user-service/users/${userId}`)
+            .then((res) => setUserInfo(res.data))
+            .then(console.log('userInfo: ', userInfo));
+
         } catch(error) {
             console.log(error);
         }
