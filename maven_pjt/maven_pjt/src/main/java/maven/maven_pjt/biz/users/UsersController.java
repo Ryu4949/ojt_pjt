@@ -23,7 +23,7 @@ public class UsersController {
     @Autowired
     UsersService usersService;
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity getAllUsers() {
         HttpStatus status = HttpStatus.OK;
         List<UsersInfoDto> result = usersService.findAllUsersInfo();
@@ -61,7 +61,7 @@ public class UsersController {
 
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity signUpUser(@RequestBody UserSignUpDto userSignUpDto) throws UserAlreadySignedUpException {
 
         UserSignUpDto newUser = userSignUpDto;
