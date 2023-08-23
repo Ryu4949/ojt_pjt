@@ -4,8 +4,6 @@ import axios from '../../api/axios'
 
 const SignupPage = () => {
 
-    const handleChange = 0;
-
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [userId, setUserId] = useState("");
