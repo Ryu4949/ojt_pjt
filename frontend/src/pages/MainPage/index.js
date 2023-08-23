@@ -37,6 +37,9 @@ const MainPage = () => {
         <input 
             onChange={handleChange}
             className='nav__input' type="text" placeholder="검색해주세요."/>
+        <div>
+            { userInfo ? userInfo.name : "조회된 결과가 없습니다." }
+        </div>
     </div>
   )
 }
