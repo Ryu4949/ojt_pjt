@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import axios from '../../api/axios';
 import requests from '../../api/requests';
+import { useDebounce } from '../../hooks/useDebounce';
 
 const MainPage = () => {
     const [searchId, setSearchId] = useState(0);
     const [userInfo, setUserInfo] = useState({});
+    const debouncedSearchId = useDebounce(searchId, 500);
 
     // api 연결 확인용입니다.
 
     useEffect(() => {
         if(searchId > 0) {
-            getUserDetail(searchId)
+            getUserDetail(debouncedSearchId)
         }
-    }, [searchId])
+    }, [debouncedSearchId])
     
     const handleChange = (e) => {
         setSearchId(e.target.value);
