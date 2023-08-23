@@ -56,7 +56,7 @@ const SignupPage = () => {
 
         axios.post('/user-service/users/', signupInfo)
         .then(res => console.log(res))
-        .catch(error => console.log(error.response.data))
+        .catch(error => console.log(error))
     }
 
     return (
