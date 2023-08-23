@@ -1,6 +1,7 @@
 package maven.maven_pjt.biz.users;
 
 import maven.maven_pjt.biz.users.dto.UpdateUserDto;
+import maven.maven_pjt.biz.users.dto.UserSignInDto;
 import maven.maven_pjt.biz.users.dto.UserSignUpDto;
 import maven.maven_pjt.biz.users.dto.UsersInfoDto;
 import maven.maven_pjt.biz.users.entity.Users;
@@ -49,5 +50,9 @@ public class UsersService {
 
     public Integer getNewUserId() {
         return usersMapper.getLastUserId()+1;
+    }
+
+    public UsersInfoDto findUserByUserIdAndPassword(UserSignInDto userSignInDto) {
+        return usersMapper.findUserByUserIdAndPassword(userSignInDto);
     }
 }

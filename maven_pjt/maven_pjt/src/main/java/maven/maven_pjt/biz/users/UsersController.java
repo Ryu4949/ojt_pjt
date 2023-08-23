@@ -2,6 +2,7 @@ package maven.maven_pjt.biz.users;
 
 import lombok.Builder;
 import maven.maven_pjt.biz.users.dto.UpdateUserDto;
+import maven.maven_pjt.biz.users.dto.UserSignInDto;
 import maven.maven_pjt.biz.users.dto.UserSignUpDto;
 import maven.maven_pjt.biz.users.dto.UsersInfoDto;
 import maven.maven_pjt.biz.users.entity.Users;
@@ -81,6 +82,20 @@ public class UsersController {
         }
 
 
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity signInUser(@RequestBody UserSignInDto userSignInDto) {
+
+        UsersInfoDto user = usersService.findUserByUserIdAndPassword(userSignInDto);
+        if (user == null) {
+            HttpStatus status = HttpStatus.BAD_REQUEST;
+            String result = "아이디 또는 비밀번호가 잘못되었습니다.";
+            return new ResponseEntity(result, status);
+        } else {
+            HttpStatus status = HttpStatus.OK;
+            return new ResponseEntity(user, status);
+        }
     }
 
 }

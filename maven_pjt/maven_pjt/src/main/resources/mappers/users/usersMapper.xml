@@ -85,4 +85,22 @@
         WHERE
             user_id = #{userId};
     </select>
+    <select id="findUserByUserIdAndPassword" parameterType="maven.maven_pjt.biz.users.dto.UserSignInDto"
+            resultType="maven.maven_pjt.biz.users.dto.UsersInfoDto">
+        SELECT
+            id,
+            name,
+            email,
+            department,
+            rank_name,
+            start_date,
+            last_change_date
+        FROM
+            USERS
+        WHERE
+            user_id = #{userId} AND password = #{password}
+        LIMIT 1;
+
+
+    </select>
 </mapper>
