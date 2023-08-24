@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 const Nav = () => {
     const initialUserData = localStorage.getItem('userData') ?
     JSON.parse(localStorage.getItem('userData')) : {};
+
+    const user = useSelector(state => state.user);
+    const { pathname } = useLocation();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if(user) {
+            if(pathname === "/") {
+                navigate("/main");
+            }
+        } else {
+            navigate("/");
+        }
+    }, [user, navigate, pathname])
+
 
     return (
         <NavWrapper>
