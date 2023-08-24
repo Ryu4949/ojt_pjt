@@ -7,7 +7,7 @@ const Nav = () => {
 
     return (
         <NavWrapper>
-            
+
         </NavWrapper>
     )
 }
@@ -15,12 +15,12 @@ const Nav = () => {
 export default Nav
 
 const NavWrapper = styled.nav`
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
   height: 70px;
-  background-color: "#090b13";
+  background-color: #090b13;
   display: flex;
   justify-content: space-between;
   align-items: center;
