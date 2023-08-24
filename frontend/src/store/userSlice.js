@@ -5,7 +5,7 @@ const initialState = {
     name: "",
     email: "",
     department: "",
-    rank: "",
+    rankName: "",
     startDate: "",
     lastChangeDate: ""
 }
@@ -19,7 +19,7 @@ export const userSlice = createSlice({
             state.email = action.payload.email;
             state.name = action.payload.name;
             state.department = action.payload.department;
-            state.rank = action.payload.rank;
+            state.rankName = action.payload.rankName;
             state.startDate = action.payload.startDate;
             state.lastChangeDate = action.payload.lastChangeDate;
         },
@@ -28,7 +28,7 @@ export const userSlice = createSlice({
             state.email = "";
             state.name = "";
             state.department = "";
-            state.rank = "";
+            state.rankName = "";
             state.startDate = "";
             state.lastChangeDate = "";
         }

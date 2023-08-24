@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import { styled } from 'styled-components'
 import axios from '../../api/axios'
+import { setUser } from '../../store/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const LoginPage = () => {
 
     const [userId, setUserId] = useState("");
     const [password, setPassword] = useState("");
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.user);
 
     const userIdHandler = (e) => {
         setUserId(e.target.value);
@@ -24,7 +28,15 @@ const LoginPage = () => {
         console.log('userInfo: ', userInfo);
 
         await axios.post('/user-service/users/signin', userInfo)
-        .then(res => console.log('로그인성공', res))
+        .then(res => {
+            console.log('로그인 성공', res.data)
+
+            dispatch(setUser(res.data))
+
+            localStorage.setItem("userData", JSON.stringify(res.data));
+
+        })
+        .then(console.log('로그인 유저', user))
         .catch(error => error.response.data);
     }
 
