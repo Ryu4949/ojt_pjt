@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { removeUser } from '../store/userSlice';
 
 const Nav = () => {
     const initialUserData = localStorage.getItem('userData') ?
@@ -10,9 +11,10 @@ const Nav = () => {
     const user = useSelector(state => state.user);
     const { pathname } = useLocation();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        if(user) {
+        if(user.name) {
             if(pathname === "/") {
                 navigate("/main");
             }
@@ -21,15 +23,47 @@ const Nav = () => {
         }
     }, [user, navigate, pathname])
 
+    const handleSignOut = () => {
+        dispatch(removeUser());
+        console.log(user);
+        localStorage.removeItem("userData");
+        navigate('/');
+    };
+
 
     return (
         <NavWrapper>
+            <Logo>
+                <img src="/src/logo.svg" alt="project_logo" />
+            </Logo>
 
+            {pathname === "/" ?
+            '' :
+            <SignOut>
+              <DropDown>
+                  <span onClick={handleSignOut}>Sign Out</span>
+              </DropDown>
+            </SignOut>}
         </NavWrapper>
     )
 }
 
 export default Nav
+
+const DropDown = styled.div`
+  position: absolute;
+  top: 48px;
+  right: 0px;
+  background: yellow;
+  border: 1px solid rgba(151, 151, 151, 0.34);
+  border-radius: 4px;
+  box-shadow: rgb(0 0 0 /50%) 0px 0px 18px 0px;
+  padding: 10px;
+  font-size: 14px;
+  letter-spacing: 3px;
+  width: 100%;
+  opacity: 0;
+`;
 
 const NavWrapper = styled.nav`
   position: sticky;
@@ -45,3 +79,34 @@ const NavWrapper = styled.nav`
   letter-spacing: 16px;
   z-index: 3;
   `;
+
+  const Logo = styled.a`
+  padding: 0;
+  width: 80px;
+  margin-top: 4px;
+  max-height: 70px;
+  font-size: 0;
+  display: inline-block;
+  
+  img {
+    display: block;
+    width: 100%;
+  }`;
+
+  const SignOut = styled.div`
+  position: relative;
+  height: 48px;
+  width: 48px;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+
+  &:hover {
+    ${DropDown} {
+      opacity: 1;
+      transition-duration: 1s;
+    }
+  }
+`;
