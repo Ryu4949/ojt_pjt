@@ -85,16 +85,16 @@ public class UsersController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity signInUser(@RequestBody UserSignInDto userSignInDto) {
+    public ResponseEntity<?> signInUser(@RequestBody UserSignInDto userSignInDto) {
 
         UsersInfoDto user = usersService.findUserByUserIdAndPassword(userSignInDto);
         if (user == null) {
             HttpStatus status = HttpStatus.BAD_REQUEST;
             String result = "아이디 또는 비밀번호가 잘못되었습니다.";
-            return new ResponseEntity(result, status);
+            return new ResponseEntity<>(result, status);
         } else {
             HttpStatus status = HttpStatus.OK;
-            return new ResponseEntity(user, status);
+            return new ResponseEntity<>(user, status);
         }
     }
 
