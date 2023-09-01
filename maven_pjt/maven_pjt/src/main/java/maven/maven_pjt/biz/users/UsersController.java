@@ -42,6 +42,12 @@ public class UsersController {
     @PutMapping("/{user_id}")
     public ResponseEntity updateUser(@PathVariable("user_id") Integer userId, @RequestBody UpdateUserDto updateUserDto) {
         HttpStatus status = HttpStatus.OK;
+        Users originalUserInfo = usersService.getUserById(userId);
+
+        if (updateUserDto.getPassword().equals("")) {
+            updateUserDto.setPassword(originalUserInfo.getPassword());
+        }
+
         usersService.updateUser(updateUserDto);
         UsersInfoDto result = usersService.getUserDetail(userId);
 
