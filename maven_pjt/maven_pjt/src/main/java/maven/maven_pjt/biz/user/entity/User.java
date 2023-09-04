@@ -3,12 +3,19 @@ package maven.maven_pjt.biz.user.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
 
 @Data
-public class User {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class User implements UserDetails {
 
     @Id
     private Integer id;
@@ -21,5 +28,50 @@ public class User {
     private LocalDate startDate;
     private LocalDate lastChangeDate;
     private boolean useAccount;
-    private String authorities;
+    private String authority;
+
+    public User(
+            String userId,
+            String password,
+            String authority
+    ) {
+        this.userId = userId;
+        this.password = password;
+        this.authority = authority;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton((GrantedAuthority) () -> authority);
+    }
+
+    @Override
+    public String getUsername() {
+        return this.userId;
+    }
+
+    public Boolean isAdmin() {
+        return authority.equals("ROLE_ADMIN");
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 }
