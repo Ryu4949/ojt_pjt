@@ -11,6 +11,7 @@ CREATE TABLE USERS
 	rank_name VARCHAR(10),
 	start_date DATE,
 	last_change_date DATE,
-	use_account boolean
+	use_account boolean,
+	authority VARCHAR(12);
 );
 

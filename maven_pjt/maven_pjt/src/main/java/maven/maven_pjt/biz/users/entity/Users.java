@@ -19,4 +19,5 @@ public class Users {
     private LocalDate startDate;
     private LocalDate lastChangeDate;
     private boolean useAccount;
+    private String authority;
 }
