@@ -20,36 +20,11 @@ public class SpringSecurityConfig {
     private final UserService userService;
     private final String myKey = "KEY";
 
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http, RememberMeServices rememberMeServices) throws Exception {
-//        http
-//                .httpBasic((httpBasic) -> httpBasic.disable())
-//                .csrf(Customizer.withDefaults())
-//                .rememberMe((remember) -> remember
-//                        .rememberMeServices(rememberMeServices))
-//                .authorizeHttpRequests(
-//                        (authorize) -> authorize.requestMatchers("/", "/home", "/signup").permitAll()
-//                                .requestMatchers("/note").hasRole("USER")
-//                                .requestMatchers("/admin").hasRole("ADMIN")
-//                                .requestMatchers(HttpMethod.POST, "/notice").hasRole("ADMIN")
-//                                .requestMatchers(HttpMethod.DELETE, "/notice").hasRole("ADMIN")
-//                                .anyRequest().authenticated())
-//                .formLogin(form -> form
-//                        .loginPage("/login")
-//                        .defaultSuccessUrl("/")
-//                        .permitAll())
-//                .logout(logout -> logout
-//                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                        .logoutSuccessUrl("/"));
-//
-//        return http.build();
-//    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity, RememberMeServices rememberMeServices) throws Exception {
-        httpSecurity.authorizeHttpRequests(
-                auth -> auth.anyRequest().authenticated()
-        );
+//        httpSecurity.authorizeHttpRequests(
+//                auth -> auth.anyRequest().authenticated()
+//        );
 
         httpSecurity.httpBasic(Customizer.withDefaults());
         httpSecurity.csrf(csrf -> csrf.disable());
@@ -66,10 +41,6 @@ public class SpringSecurityConfig {
         return rememberMe;
     }
 
-//    @Bean
-//    public void configure(WebSecurity web) {
-//        web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-//    }
 
 //    @Bean
 //    public UserDetailsService userDetailsService() {
