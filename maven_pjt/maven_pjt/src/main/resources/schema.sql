@@ -12,6 +12,6 @@ CREATE TABLE USERS
 	start_date DATE,
 	last_change_date DATE,
 	use_account boolean,
-	authority VARCHAR(12);
+	authority VARCHAR(12)
 );
 
