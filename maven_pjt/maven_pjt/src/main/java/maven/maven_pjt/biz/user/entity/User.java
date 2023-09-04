@@ -21,5 +21,5 @@ public class User {
     private LocalDate startDate;
     private LocalDate lastChangeDate;
     private boolean useAccount;
-    private String authority;
+    private String authorities;
 }
