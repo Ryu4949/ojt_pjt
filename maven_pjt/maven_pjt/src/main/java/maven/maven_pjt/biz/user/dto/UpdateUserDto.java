@@ -1,4 +1,4 @@
-package maven.maven_pjt.biz.users.dto;
+package maven.maven_pjt.biz.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

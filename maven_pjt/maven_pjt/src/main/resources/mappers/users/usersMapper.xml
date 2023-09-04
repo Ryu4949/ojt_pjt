@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="maven.maven_pjt.biz.users.UsersMapper">
-    <select id="getUserById" resultType="maven.maven_pjt.biz.users.entity.Users" parameterType="Integer">
+<mapper namespace="maven.maven_pjt.biz.user.UserMapper">
+    <select id="getUserById" resultType="maven.maven_pjt.biz.user.entity.User" parameterType="Integer">
         SELECT
             *
         FROM
@@ -21,7 +21,7 @@
         FROM
             USERS;
     </select>
-    <select id="getUserDetail" resultType="maven.maven_pjt.biz.users.dto.UsersInfoDto" parameterType="Integer">
+    <select id="getUserDetail" resultType="maven.maven_pjt.biz.user.dto.UserInfoDto" parameterType="Integer">
         SELECT
             id,
             name,
@@ -35,7 +35,7 @@
         WHERE
             id = #{userId};
     </select>
-    <select id="updateUser" resultType="maven.maven_pjt.biz.users.dto.UsersInfoDto" parameterType="maven.maven_pjt.biz.users.dto.UpdateUserDto">
+    <select id="updateUser" resultType="maven.maven_pjt.biz.user.dto.UserInfoDto" parameterType="maven.maven_pjt.biz.user.dto.UpdateUserDto">
         UPDATE
             USERS
         SET
@@ -54,7 +54,7 @@
         WHERE
             id = #{userId};
     </select>
-    <select id="signUpUser" parameterType="maven.maven_pjt.biz.users.dto.UserSignUpDto">
+    <select id="signUpUser" parameterType="maven.maven_pjt.biz.user.dto.UserSignUpDto">
         INSERT INTO
             USERS
         VALUES
@@ -69,7 +69,7 @@
             id DESC
         LIMIT 1;
     </select>
-    <select id="getUserByUserId" parameterType="String" resultType="maven.maven_pjt.biz.users.entity.Users">
+    <select id="getUserByUserId" parameterType="String" resultType="maven.maven_pjt.biz.user.entity.User">
         SELECT
             id,
             name,
@@ -85,8 +85,8 @@
         WHERE
             user_id = #{userId};
     </select>
-    <select id="findUserByUserIdAndPassword" parameterType="maven.maven_pjt.biz.users.dto.UserSignInDto"
-            resultType="maven.maven_pjt.biz.users.dto.UsersInfoDto">
+    <select id="findUserByUserIdAndPassword" parameterType="maven.maven_pjt.biz.user.dto.UserSignInDto"
+            resultType="maven.maven_pjt.biz.user.dto.UserInfoDto">
         SELECT
             id,
             name,

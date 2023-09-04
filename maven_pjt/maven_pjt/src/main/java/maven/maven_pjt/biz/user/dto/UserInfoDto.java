@@ -1,4 +1,4 @@
-package maven.maven_pjt.biz.users.dto;
+package maven.maven_pjt.biz.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
-public class UsersInfoDto {
+public class UserInfoDto {
 
     private Integer id;
     private String name;

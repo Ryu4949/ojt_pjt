@@ -1,12 +1,14 @@
-package maven.maven_pjt.biz.users.entity;
+package maven.maven_pjt.biz.user.entity;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-public class Users {
+public class User {
 
     @Id
     private Integer id;

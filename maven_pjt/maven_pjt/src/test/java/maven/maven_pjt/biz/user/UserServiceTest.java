@@ -1,11 +1,9 @@
-package maven.maven_pjt.biz.users;
+package maven.maven_pjt.biz.user;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class UsersServiceTest {
+class UserServiceTest {
 
     @DisplayName("사용자Id로 사용자 찾기")
     @Test

@@ -1,4 +1,4 @@
-package maven.maven_pjt.biz.users.exception;
+package maven.maven_pjt.biz.user.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

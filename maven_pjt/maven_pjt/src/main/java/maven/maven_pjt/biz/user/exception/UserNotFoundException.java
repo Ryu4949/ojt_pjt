@@ -1,4 +1,4 @@
-package maven.maven_pjt.biz.users.exception;
+package maven.maven_pjt.biz.user.exception;
 
 public class UserNotFoundException extends RuntimeException{
 
