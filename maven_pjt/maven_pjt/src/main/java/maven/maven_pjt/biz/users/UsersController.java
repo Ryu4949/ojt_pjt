@@ -24,6 +24,10 @@ public class UsersController {
     @Autowired
     UsersService usersService;
 
+    public UsersController(UsersService usersService) {
+        this.usersService = usersService;
+    }
+
     @GetMapping
     public ResponseEntity getAllUsers() {
         HttpStatus status = HttpStatus.OK;
