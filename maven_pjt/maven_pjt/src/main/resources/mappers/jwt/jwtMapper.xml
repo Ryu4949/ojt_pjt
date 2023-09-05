@@ -4,11 +4,11 @@
 <mapper namespace="maven.maven_pjt.jwt.JwtMapper">
     <select id="findTokenByUserId" parameterType="String">
         SELECT
-            rf_key,
-            rf_value
+            rt_key,
+            rt_value
         FROM
             REFRESH_TOKEN
         WHERE
-            rf_key = #{userId};
+            rt_key = #{userId};
     </select>
 </mapper>
