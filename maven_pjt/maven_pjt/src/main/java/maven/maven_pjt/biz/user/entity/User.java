@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,6 +16,7 @@ import java.util.Collections;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class User implements UserDetails {
 
     @Id
@@ -72,6 +74,15 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Builder
+    public User(int id, String userId, String password, String name, String authority) {
+        this.id = id;
+        this.userId = userId;
+        this.password = password;
+        this.name = name;
+        this.authority = authority;
     }
 
 }
