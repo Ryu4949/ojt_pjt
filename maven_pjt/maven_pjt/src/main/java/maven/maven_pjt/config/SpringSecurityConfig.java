@@ -24,19 +24,19 @@ public class SpringSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity, RememberMeServices rememberMeServices) throws Exception {
-//        httpSecurity.authorizeHttpRequests(
-//                auth -> auth.anyRequest().authenticated()
-//        );
+        httpSecurity.csrf(csrf -> csrf.disable());
+        httpSecurity.authorizeHttpRequests(
+                auth -> auth.requestMatchers(new AntPathRequestMatcher("/user-service/**")).permitAll()
+        );
 
         httpSecurity.httpBasic(Customizer.withDefaults());
-        httpSecurity.csrf(csrf -> csrf.disable());
+
         httpSecurity
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll())
                 .headers((headers) -> headers
                         .addHeaderWriter(new XFrameOptionsHeaderWriter(
-                                XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
-        ;
+                                XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)));
 
         return httpSecurity.build();
     }
