@@ -77,8 +77,7 @@ public class User implements UserDetails {
     }
 
     @Builder
-    public User(int id, String userId, String password, String name, String authority) {
-        this.id = id;
+    public User(String userId, String password, String name, String authority) {
         this.userId = userId;
         this.password = password;
         this.name = name;
