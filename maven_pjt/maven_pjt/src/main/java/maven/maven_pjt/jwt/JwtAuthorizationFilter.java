@@ -32,7 +32,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         String token = null;
         try {
             token = Arrays.stream(request.getCookies())
-                    .filter(cookie -> cookie.getName().equals(JwtProperties.COOKIE_NAME)).findFirst()
+                    .filter(cookie -> cookie.getName().equals(JwtTokenProvider.COOKIE_NAME)).findFirst()
                     .map(Cookie::getValue)
                     .orElse(null);
         } catch (Exception ignored) {
@@ -42,7 +42,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 Authentication authentication = getUsernamePasswordAuthenticationToken(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (Exception e) {
-                Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, null);
+                Cookie cookie = new Cookie(JwtTokenProvider.COOKIE_NAME, null);
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
             }
