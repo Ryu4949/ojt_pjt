@@ -2,5 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="maven.maven_pjt.jwt.JwtMapper">
-
+    <select id="findTokenByUserId" parameterType="String">
+        SELECT
+            rf_key,
+            rf_value
+        FROM
+            REFRESH_TOKEN
+        WHERE
+            rf_key = #{userId};
+    </select>
 </mapper>
