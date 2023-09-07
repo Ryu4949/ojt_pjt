@@ -6,6 +6,8 @@ import maven.maven_pjt.biz.user.dto.UserSignUpDto;
 import maven.maven_pjt.biz.user.dto.UserInfoDto;
 import maven.maven_pjt.biz.user.exception.UserAlreadySignedUpException;
 import maven.maven_pjt.biz.user.exception.UserNotFoundException;
+import maven.maven_pjt.jwt.TokenDto;
+import maven.maven_pjt.jwt.TokenRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -86,7 +88,7 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity signInUser(@RequestBody UserSignInDto userSignInDto) {
+    public ResponseEntity<TokenDto> signInUser(@RequestBody UserSignInDto userSignInDto) {
 
         UserInfoDto user = userService.findUserByUserIdAndPassword(userSignInDto);
         if (user == null) {
@@ -97,6 +99,11 @@ public class UserController {
             HttpStatus status = HttpStatus.OK;
             return new ResponseEntity(user, status);
         }
+    }
+
+    @PostMapping("/reissue")
+    public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
+        return ResponseEntity.ok(UserService.reissue(tokenRequestDto));
     }
 
 }
