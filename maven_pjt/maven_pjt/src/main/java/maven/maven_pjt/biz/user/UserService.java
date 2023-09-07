@@ -94,14 +94,9 @@ public class UserService {
 
     @Transactional
     public TokenDto login(UserRequestDto userRequestDto) {
-        System.out.println(userRequestDto);
         UsernamePasswordAuthenticationToken authenticationToken = userRequestDto.toAuthentication();
-        System.out.println("tokentoken2" + authenticationToken);
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        System.out.println("tokentoken3");
         TokenDto tokenDto = jwtTokenProvider.generateTokenDto(authentication);
-
-        System.out.println("tokentoken4");
 
         RefreshToken refreshToken = RefreshToken.builder()
                 .key(authentication.getName())

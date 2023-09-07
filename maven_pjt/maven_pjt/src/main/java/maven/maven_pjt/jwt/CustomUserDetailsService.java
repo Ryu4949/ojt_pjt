@@ -24,8 +24,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        System.out.println(userMapper.getUserByUserId(userId));
-        System.out.println(userMapper.getUserByUserId(userId).map(this::createUserDetails));
 
         return userMapper.getUserByUserId(userId)
                 .map(this::createUserDetails)
