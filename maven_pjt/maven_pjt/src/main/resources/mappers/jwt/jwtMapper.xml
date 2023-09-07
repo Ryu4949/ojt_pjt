@@ -9,6 +9,15 @@
         FROM
             REFRESH_TOKEN
         WHERE
-            rt_key = #{userId};
+            rt_key = #{key};
+    </select>
+    <select id="saveRefreshToken">
+        INSERT INTO
+            REFRESH_TOKEN (rt_key, rt_value)
+        VALUES
+            (#{key}, #{value})
+        ON DUPLICATE KEY UPDATE
+            rt_key = #{key},
+            rt_value = #{value};
     </select>
 </mapper>

@@ -1,15 +1,13 @@
 package maven.maven_pjt.biz.user;
 
 import lombok.RequiredArgsConstructor;
-import maven.maven_pjt.biz.user.dto.UpdateUserDto;
-import maven.maven_pjt.biz.user.dto.UserSignInDto;
-import maven.maven_pjt.biz.user.dto.UserSignUpDto;
-import maven.maven_pjt.biz.user.dto.UserInfoDto;
+import maven.maven_pjt.biz.user.dto.*;
 import maven.maven_pjt.biz.user.entity.User;
 import maven.maven_pjt.biz.user.exception.UserAlreadySignedUpException;
 import maven.maven_pjt.biz.user.exception.UserNotFoundException;
 import maven.maven_pjt.jwt.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,8 +21,6 @@ import java.util.List;
 public class UserService {
     @Autowired
     AuthenticationManagerBuilder authenticationManagerBuilder;
-    @Autowired
-    PasswordEncoder passwordEncoder;
     @Autowired
     JwtTokenProvider jwtTokenProvider;
     @Autowired
@@ -89,6 +85,22 @@ public class UserService {
 
         RefreshToken newRefreshToken = refreshToken.updateValue(tokenDto.getRefreshToken());
         jwtMapper.saveRefreshToken(newRefreshToken);
+
+        return tokenDto;
+    }
+
+    @Transactional
+    public TokenDto login(UserRequestDto userRequestDto) {
+        UsernamePasswordAuthenticationToken authenticationToken = userRequestDto.toAuthentication();
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        TokenDto tokenDto = jwtTokenProvider.generateTokenDto(authentication);
+
+        RefreshToken refreshToken = RefreshToken.builder()
+                .key(authentication.getName())
+                .value(tokenDto.getRefreshToken())
+                .build();
+
+        jwtMapper.saveRefreshToken(refreshToken);
 
         return tokenDto;
     }
