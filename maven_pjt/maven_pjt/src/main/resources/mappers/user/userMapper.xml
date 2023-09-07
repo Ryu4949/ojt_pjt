@@ -74,12 +74,14 @@
             id,
             name,
             email,
+            user_id userId,
             password,
             department,
-            rank_name,
-            start_date,
-            last_change_date,
-            use_account
+            rank_name rankName,
+            start_date startDate,
+            last_change_date lastChangeDate,
+            use_account useAccount,
+            authority
         FROM
             USERS
         WHERE

@@ -20,15 +20,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     @Autowired
-    AuthenticationManagerBuilder authenticationManagerBuilder;
+    private AuthenticationManagerBuilder authenticationManagerBuilder;
     @Autowired
-    JwtTokenProvider jwtTokenProvider;
+    private JwtTokenProvider jwtTokenProvider;
     @Autowired
-    JwtMapper jwtMapper;
+    private JwtMapper jwtMapper;
     @Autowired
-    UserMapper userMapper;
+    private UserMapper userMapper;
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     public User getUserById(Integer userId) { return userMapper.getUserById(userId);}
     public List<UserInfoDto> findAllUsersInfo() {
@@ -94,7 +94,7 @@ public class UserService {
 
     @Transactional
     public TokenDto login(UserRequestDto userRequestDto) {
-        System.out.println("tokentoken1");
+        System.out.println(userRequestDto);
         UsernamePasswordAuthenticationToken authenticationToken = userRequestDto.toAuthentication();
         System.out.println("tokentoken2" + authenticationToken);
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);

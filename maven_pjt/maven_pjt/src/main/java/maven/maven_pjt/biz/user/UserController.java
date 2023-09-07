@@ -19,10 +19,10 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;

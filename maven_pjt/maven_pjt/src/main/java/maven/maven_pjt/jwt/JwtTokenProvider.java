@@ -43,8 +43,13 @@ public class JwtTokenProvider {
 
         long now = (new Date()).getTime();
 
+        System.out.println("----------------------");
+        System.out.println("권한가져오기");
+        System.out.println("----------------------");
+
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
+        System.out.println(authentication.getName()+"//"+authorities+"//"+accessTokenExpiresIn+"//"+SignatureAlgorithm.HS512);
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())       // payload "sub": "name"
                 .claim(AUTHORITIES_KEY, authorities)        // payload "auth": "ROLE_USER"
@@ -52,11 +57,19 @@ public class JwtTokenProvider {
                 .signWith(key, SignatureAlgorithm.HS512)    // header "alg": "HS512"
                 .compact();
 
+        System.out.println("----------------------");
+        System.out.println("AccessToken 생성");
+        System.out.println("----------------------");
+
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
                 .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
+
+        System.out.println("----------------------");
+        System.out.println("권한가져오기");
+        System.out.println("----------------------");
 
         return TokenDto.builder()
                 .grantType(BEARER_TYPE)
