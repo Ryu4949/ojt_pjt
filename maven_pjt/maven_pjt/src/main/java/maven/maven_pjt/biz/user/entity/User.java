@@ -3,10 +3,7 @@ package maven.maven_pjt.biz.user.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,6 +14,7 @@ import java.util.Collections;
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
+@AllArgsConstructor
 public class User implements UserDetails {
 
     @Id
