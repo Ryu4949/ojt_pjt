@@ -103,7 +103,7 @@ public class UserController {
 
     @PostMapping("/reissue")
     public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
-        return ResponseEntity.ok(UserService.reissue(tokenRequestDto));
+        return ResponseEntity.ok(userService.reissue(tokenRequestDto));
     }
 
 }
