@@ -85,10 +85,12 @@
         WHERE
             user_id = #{userId};
     </select>
-    <select id="findUserByUserIdAndPassword" parameterType="maven.maven_pjt.biz.user.dto.UserSignInDto"
+    <select id="findUserByUserId" parameterType="maven.maven_pjt.biz.user.dto.UserSignInDto"
             resultType="maven.maven_pjt.biz.user.dto.UserInfoDto">
         SELECT
             id,
+            user_id,
+            password,
             name,
             email,
             department,
@@ -98,7 +100,7 @@
         FROM
             USERS
         WHERE
-            user_id = #{userId} AND password = #{password}
+            user_id = #{userId}
         LIMIT 1;
 
 

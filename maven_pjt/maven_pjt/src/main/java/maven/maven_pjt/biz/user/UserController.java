@@ -1,9 +1,6 @@
 package maven.maven_pjt.biz.user;
 
-import maven.maven_pjt.biz.user.dto.UpdateUserDto;
-import maven.maven_pjt.biz.user.dto.UserSignInDto;
-import maven.maven_pjt.biz.user.dto.UserSignUpDto;
-import maven.maven_pjt.biz.user.dto.UserInfoDto;
+import maven.maven_pjt.biz.user.dto.*;
 import maven.maven_pjt.biz.user.exception.UserAlreadySignedUpException;
 import maven.maven_pjt.biz.user.exception.UserNotFoundException;
 import maven.maven_pjt.jwt.TokenDto;
@@ -20,6 +17,9 @@ import java.util.List;
 @RequestMapping("/user-service/users")
 @CrossOrigin("*")
 public class UserController {
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     UserService userService;
@@ -90,15 +90,20 @@ public class UserController {
 
     @PostMapping("/signin")
     public ResponseEntity<TokenDto> signInUser(@RequestBody UserSignInDto userSignInDto) {
-
-        UserInfoDto user = userService.findUserByUserIdAndPassword(userSignInDto);
-        if (user == null) {
+        System.out.println("hello world");
+        UserInfoDto user = userService.findUserByUserId(userSignInDto);
+        if (user == null || !passwordEncoder.matches(userSignInDto.getPassword(), user.getPassword())) {
             HttpStatus status = HttpStatus.BAD_REQUEST;
             String result = "아이디 또는 비밀번호가 잘못되었습니다.";
             return new ResponseEntity(result, status);
         } else {
-            HttpStatus status = HttpStatus.OK;
-            return new ResponseEntity(user, status);
+            UserRequestDto userRequestDto = UserRequestDto.builder()
+                    .userId(userSignInDto.getUserId())
+                    .password(userSignInDto.getPassword())
+                    .build();
+
+            System.out.println("ㅇㅇㅇㅇ");
+            return ResponseEntity.ok(userService.login(userRequestDto));
         }
     }
 

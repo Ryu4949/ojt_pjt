@@ -28,6 +28,6 @@ public interface UserMapper {
 
     User getUserByUserId(String userId);
 
-    UserInfoDto findUserByUserIdAndPassword(UserSignInDto userSignInDto);
+    UserInfoDto findUserByUserId(UserSignInDto userSignInDto);
 
 }

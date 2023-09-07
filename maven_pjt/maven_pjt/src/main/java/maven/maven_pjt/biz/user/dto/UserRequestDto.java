@@ -15,13 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class UserRequestDto {
     private String userId;
     private String password;
-    private String name;
 
     public User toUser(PasswordEncoder passwordEncoder) {
         return User.builder()
                 .userId(userId)
                 .password(passwordEncoder.encode(password))
-                .name(name)
                 .authority("ROLE_USER")
                 .build();
     }

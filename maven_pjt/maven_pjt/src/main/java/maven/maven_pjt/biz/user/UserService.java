@@ -27,6 +27,8 @@ public class UserService {
     JwtMapper jwtMapper;
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public User getUserById(Integer userId) { return userMapper.getUserById(userId);}
     public List<UserInfoDto> findAllUsersInfo() {
@@ -54,6 +56,7 @@ public class UserService {
         if (userMapper.getUserByUserId(userSignUpDto.getUserId()) != null) {
             throw new UserAlreadySignedUpException();
         }
+        userSignUpDto.setPassword(passwordEncoder.encode(userSignUpDto.getPassword()));
         userMapper.signUpUser(userSignUpDto);
     }
 
@@ -61,8 +64,8 @@ public class UserService {
         return userMapper.getLastUserId()+1;
     }
 
-    public UserInfoDto findUserByUserIdAndPassword(UserSignInDto userSignInDto) {
-        return userMapper.findUserByUserIdAndPassword(userSignInDto);
+    public UserInfoDto findUserByUserId(UserSignInDto userSignInDto) {
+        return userMapper.findUserByUserId(userSignInDto);
     }
 
     @Transactional
@@ -91,9 +94,14 @@ public class UserService {
 
     @Transactional
     public TokenDto login(UserRequestDto userRequestDto) {
+        System.out.println("tokentoken1");
         UsernamePasswordAuthenticationToken authenticationToken = userRequestDto.toAuthentication();
+        System.out.println("tokentoken2" + authenticationToken);
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        System.out.println("tokentoken3");
         TokenDto tokenDto = jwtTokenProvider.generateTokenDto(authentication);
+
+        System.out.println("tokentoken4");
 
         RefreshToken refreshToken = RefreshToken.builder()
                 .key(authentication.getName())
