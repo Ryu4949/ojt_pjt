@@ -6,7 +6,7 @@ CREATE TABLE USERS
 	name VARCHAR(10),
 	email VARCHAR(60),
 	user_id VARCHAR(20),
-	password VARCHAR(20),
+	password VARCHAR(255),
 	department VARCHAR(20),
 	rank_name VARCHAR(10),
 	start_date DATE,
