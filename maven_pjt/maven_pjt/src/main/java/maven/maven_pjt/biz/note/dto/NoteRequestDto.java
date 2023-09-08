@@ -1,19 +1,18 @@
 package maven.maven_pjt.biz.note.dto;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-
-import java.time.LocalDate;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@Builder
-public class NoteDetailDto {
+@NoArgsConstructor
+public class NoteRequestDto {
+    @Id
     private int id;
     private String title;
     private String content;
     private int userId;
-    private LocalDate createDate;
-    private LocalDate updateDate;
 }

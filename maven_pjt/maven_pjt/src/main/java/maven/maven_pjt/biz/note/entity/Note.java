@@ -1,5 +1,7 @@
 package maven.maven_pjt.biz.note.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.*;
 import org.springframework.cglib.core.Local;
@@ -10,8 +12,9 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @AllArgsConstructor
+@Entity
 public class Note {
-    @Id
+    @Id @GeneratedValue
     private int id;
     private String title;
     private String content;

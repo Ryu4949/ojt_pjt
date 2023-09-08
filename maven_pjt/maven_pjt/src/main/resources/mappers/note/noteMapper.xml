@@ -16,4 +16,13 @@
         FROM
             NOTE;
     </select>
+    <insert id="createNote" parameterType="maven.maven_pjt.biz.note.dto.NoteRequestDto" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+            NOTE (title, content, userId, create_date, update_date)
+        VALUES (#{title}, #{content}, #{userId}, NOW(), NOW()
+        );
+        <selectKey resultType="Integer" keyProperty="id" keyColumn="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
 </mapper>

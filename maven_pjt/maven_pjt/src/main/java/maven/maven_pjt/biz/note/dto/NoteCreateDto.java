@@ -1,16 +1,13 @@
 package maven.maven_pjt.biz.note.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
-@Builder
-public class NoteDetailDto {
-    private int id;
+public class NoteCreateDto {
     private String title;
     private String content;
     private int userId;

@@ -1,16 +1,14 @@
 package maven.maven_pjt.biz.note;
 
-import jakarta.websocket.server.PathParam;
 import lombok.Data;
+import maven.maven_pjt.biz.note.dto.NoteRequestDto;
 import maven.maven_pjt.biz.note.dto.NoteDetailDto;
 import maven.maven_pjt.biz.note.entity.Note;
-import maven.maven_pjt.biz.user.entity.User;
+import maven.maven_pjt.biz.user.UserMapper;
 import maven.maven_pjt.jwt.JwtTokenProvider;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,11 +20,12 @@ public class NoteController {
 
     @Autowired
     private NoteMapper noteMapper;
-
     @Autowired
     private NoteService noteService;
     @Autowired
     JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    private UserMapper userMapper;
 
     @GetMapping
     public ResponseEntity getAllNotes(@RequestHeader(value="X-AUTH-TOKEN") String accessToken) {
@@ -59,10 +58,20 @@ public class NoteController {
     }
 
     @PostMapping
-    public void createNote() {
-        // 1. 인증 후
+    public ResponseEntity createNote(@RequestHeader(value="X-AUTH-TOKEN") String accessToken, @RequestBody NoteRequestDto noteRequestDto) {
+        if(jwtTokenProvider.validateToken(accessToken)) {
+            // 1. 인증 후
+            String userId = jwtTokenProvider.parseClaims(accessToken).getSubject();
+            int id = userMapper.getUserByUserId(userId).get().getId();
+            noteRequestDto.setUserId(id);
+            Integer result = noteService.createNote(noteRequestDto);
 
-        // 2. 새 노트 생성
+            // 2. 새 노트 생성하고 새로 생성한 글의 id값 반환
+            return ResponseEntity.ok(result);
+        } else {
+            System.out.println("hh");
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @PutMapping
