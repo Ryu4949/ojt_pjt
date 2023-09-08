@@ -1,17 +1,13 @@
-package maven.maven_pjt.biz.note.entity;
+package maven.maven_pjt.biz.note.dto;
 
-import jakarta.persistence.Id;
-import lombok.*;
-import org.springframework.cglib.core.Local;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
 @AllArgsConstructor
-public class Note {
-    @Id
+public class NoteDetailDto {
     private int id;
     private String title;
     private String content;

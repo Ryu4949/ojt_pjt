@@ -28,8 +28,10 @@ public class SpringSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity, RememberMeServices rememberMeServices) throws Exception {
         httpSecurity.csrf(csrf -> csrf.disable());
         httpSecurity.authorizeHttpRequests(
-                auth -> auth.requestMatchers(new AntPathRequestMatcher("/user-service/**")).permitAll()
-        );
+                auth -> auth.requestMatchers(new AntPathRequestMatcher("/user-service/**")).permitAll())
+                .authorizeHttpRequests(
+                        auth -> auth.requestMatchers(new AntPathRequestMatcher("/notes/**")).permitAll()
+                );
 
         httpSecurity.httpBasic(Customizer.withDefaults());
 
