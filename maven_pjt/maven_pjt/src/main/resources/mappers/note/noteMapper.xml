@@ -10,4 +10,10 @@
         WHERE
             id = #{noteId};
     </select>
+    <select id="getAllNotes" resultType="hashmap">
+        SELECT
+            *
+        FROM
+            NOTE;
+    </select>
 </mapper>

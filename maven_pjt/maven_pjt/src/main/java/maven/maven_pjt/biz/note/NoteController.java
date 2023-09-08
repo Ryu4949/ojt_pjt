@@ -6,6 +6,7 @@ import maven.maven_pjt.biz.note.dto.NoteDetailDto;
 import maven.maven_pjt.biz.note.entity.Note;
 import maven.maven_pjt.biz.user.entity.User;
 import maven.maven_pjt.jwt.JwtTokenProvider;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,10 +29,18 @@ public class NoteController {
     JwtTokenProvider jwtTokenProvider;
 
     @GetMapping
-    public void getAllNotes() {
+    public ResponseEntity getAllNotes(@RequestHeader(value="X-AUTH-TOKEN") String accessToken) {
         // 1. 인증 후
-        
+        if(jwtTokenProvider.validateToken(accessToken)) {
+            String userId = jwtTokenProvider.parseClaims(accessToken).getSubject();
+            List<Note> result = noteService.getAllNotes();
+            HttpStatus status = HttpStatus.OK;
+
         // 2. 모든 게시글 가져오기
+            return new ResponseEntity<>(result, status);
+        } else {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @GetMapping("/{note_id}")
@@ -43,7 +52,7 @@ public class NoteController {
             NoteDetailDto result = noteService.getNoteById(noteId);
 
             // 2. 게시글 누르면 글의 id 값을 가지고 해당 글 정보만 조회
-            return ResponseEntity.ok(noteService.getNoteById(noteId));
+            return ResponseEntity.ok(result);
         } else {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
