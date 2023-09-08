@@ -72,16 +72,11 @@ public class UserService {
 
     @Transactional
     public TokenDto reissue(TokenRequestDto tokenRequestDto) {
-        System.out.println("1");
         if(!jwtTokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
             throw new RuntimeException("Refresh Token이 유효하지 않습니다.");
         }
-        System.out.println("2");
 
         Authentication authentication = jwtTokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
-        System.out.println("3");
-        System.out.println(authentication.getName());
-        System.out.println(jwtMapper.findTokenByUserId(authentication.getName()));
 
         Optional<RefreshToken> checkRefreshToken = jwtMapper.findTokenByUserId(authentication.getName());
 
@@ -94,12 +89,10 @@ public class UserService {
         }
 //        RefreshToken refreshToken = jwtMapper.findTokenByUserId(authentication.getName())
 //                .orElseThrow(() -> new RuntimeException("로그아웃된 사용자입니다."));
-        System.out.println("4");
 
         if (!refreshToken.getTokenValue().equals(tokenRequestDto.getRefreshToken())) {
             throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
         }
-        System.out.println("5");
 
         TokenDto tokenDto = jwtTokenProvider.generateTokenDto(authentication);
 

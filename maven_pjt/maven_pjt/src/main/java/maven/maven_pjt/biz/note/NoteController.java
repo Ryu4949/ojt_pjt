@@ -69,7 +69,6 @@ public class NoteController {
             // 2. 새 노트 생성하고 새로 생성한 글의 id값 반환
             return ResponseEntity.ok(result);
         } else {
-            System.out.println("hh");
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
     }
