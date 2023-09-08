@@ -2,21 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="maven.maven_pjt.jwt.JwtMapper">
-    <select id="findTokenByUserId" resultType="String">
+    <select id="findTokenByUserId" parameterType="String" resultType="maven.maven_pjt.jwt.RefreshToken">
         SELECT
-            rt_key,
-            rt_value
+            rt_key AS tokenKey,
+            rt_value AS tokenValue
         FROM
             REFRESH_TOKEN
         WHERE
-            rt_key = #{key};
+            rt_key = #{tokenKey};
     </select>
     <select id="saveRefreshToken" parameterType="maven.maven_pjt.jwt.RefreshToken">
         INSERT INTO
             REFRESH_TOKEN (rt_key, rt_value)
         VALUES
-            (#{key}, #{value})
+            (#{tokenKey}, #{tokenValue})
         ON DUPLICATE KEY UPDATE
-            rt_value = #{value};
+            rt_value = #{tokenValue};
     </select>
 </mapper>

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -53,7 +54,8 @@ public class UserService {
     }
 
     public void signUpUser(UserSignUpDto userSignUpDto) throws UserAlreadySignedUpException {
-        if (userMapper.getUserByUserId(userSignUpDto.getUserId()) != null) {
+
+        if (userMapper.getUserByUserId(userSignUpDto.getUserId()).isPresent()) {
             throw new UserAlreadySignedUpException();
         }
         userSignUpDto.setPassword(passwordEncoder.encode(userSignUpDto.getPassword()));
@@ -78,12 +80,23 @@ public class UserService {
 
         Authentication authentication = jwtTokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
         System.out.println("3");
+        System.out.println(authentication.getName());
+        System.out.println(jwtMapper.findTokenByUserId(authentication.getName()));
 
-        RefreshToken refreshToken = jwtMapper.findTokenByUserId(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("로그아웃된 사용자입니다."));
+        Optional<RefreshToken> checkRefreshToken = jwtMapper.findTokenByUserId(authentication.getName());
+
+        RefreshToken refreshToken;
+
+        if(checkRefreshToken.isPresent()) {
+            refreshToken = checkRefreshToken.get();
+        } else {
+            throw new RuntimeException("로그아웃된 사용자입니다.");
+        }
+//        RefreshToken refreshToken = jwtMapper.findTokenByUserId(authentication.getName())
+//                .orElseThrow(() -> new RuntimeException("로그아웃된 사용자입니다."));
         System.out.println("4");
 
-        if (!refreshToken.getValue().equals(tokenRequestDto.getRefreshToken())) {
+        if (!refreshToken.getTokenValue().equals(tokenRequestDto.getRefreshToken())) {
             throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
         }
         System.out.println("5");

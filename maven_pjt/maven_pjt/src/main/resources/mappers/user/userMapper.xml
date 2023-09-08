@@ -23,13 +23,7 @@
     </select>
     <select id="getUserDetail" resultType="maven.maven_pjt.biz.user.dto.UserInfoDto" parameterType="Integer">
         SELECT
-            id,
-            name,
-            email,
-            department,
-            rank_name,
-            start_date,
-            last_change_date
+            *
         FROM
             USERS
         WHERE

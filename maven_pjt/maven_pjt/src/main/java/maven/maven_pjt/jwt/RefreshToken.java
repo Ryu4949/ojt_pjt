@@ -1,9 +1,6 @@
 package maven.maven_pjt.jwt;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,18 +10,18 @@ import lombok.NoArgsConstructor;
 public class RefreshToken {
 
     @Id
-    private String key;
+    private String tokenKey;
 
-    private String value;
+    private String tokenValue;
 
     @Builder
     public RefreshToken(String key, String value) {
-        this.key = key;
-        this.value = value;
+        this.tokenKey = key;
+        this.tokenValue = value;
     }
 
     public RefreshToken updateValue(String token) {
-        this.value = token;
+        this.tokenValue = token;
         return this;
     }
 }
