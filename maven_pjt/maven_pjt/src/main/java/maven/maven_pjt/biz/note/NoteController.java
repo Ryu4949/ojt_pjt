@@ -7,6 +7,7 @@ import maven.maven_pjt.biz.note.entity.Note;
 import maven.maven_pjt.biz.user.entity.User;
 import maven.maven_pjt.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -36,12 +37,16 @@ public class NoteController {
     @GetMapping("/{note_id}")
     public ResponseEntity getNoteDetail(@RequestHeader(value="X-AUTH-TOKEN") String accessToken, @PathVariable("note_id") Integer noteId) {
 
-        // 1. 인증 후
-        String userId = jwtTokenProvider.parseClaims(accessToken).getSubject();
-        NoteDetailDto result = noteService.getNoteById(noteId);
+        if(jwtTokenProvider.validateToken(accessToken)) {
+            // 1. 인증 후
+            String userId = jwtTokenProvider.parseClaims(accessToken).getSubject();
+            NoteDetailDto result = noteService.getNoteById(noteId);
 
-        // 2. 게시글 누르면 글의 id 값을 가지고 해당 글 정보만 조회
-        return ResponseEntity.ok(noteService.getNoteById(noteId));
+            // 2. 게시글 누르면 글의 id 값을 가지고 해당 글 정보만 조회
+            return ResponseEntity.ok(noteService.getNoteById(noteId));
+        } else {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @PostMapping
