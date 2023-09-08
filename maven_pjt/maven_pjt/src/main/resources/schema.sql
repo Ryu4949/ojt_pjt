@@ -21,3 +21,13 @@ CREATE TABLE REFRESH_TOKEN
     rt_value VARCHAR(255)
 );
 
+CREATE TABLE NOTE
+(
+    id int PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(64),
+    content VARCHAR(255),
+    userId int,
+    create_date DATE,
+    update_date DATE,
+    FOREIGN KEY (userId) REFERENCES USERS(id) ON UPDATE CASCADE ON DELETE RESTRICT
+);
