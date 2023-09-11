@@ -35,4 +35,10 @@
         WHERE
             id = #{id};
     </select>
+    <select id="deleteNote">
+        DELETE FROM
+            NOTE
+        WHERE
+            id = #{noteId};
+    </select>
 </mapper>

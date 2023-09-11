@@ -39,4 +39,8 @@ public class NoteService {
         return noteRequestDto.getId();
     }
 
+    public void deleteNote(Integer noteId) {
+        noteMapper.deleteNote(noteId);
+    }
+
 }

@@ -17,4 +17,6 @@ public interface NoteMapper {
     Integer createNote(NoteRequestDto noteRequestDto);
 
     Integer updateNote(NoteRequestDto noteRequestDto);
+
+    void deleteNote(Integer noteId);
 }

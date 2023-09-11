@@ -101,13 +101,28 @@ public class NoteController {
         }
     }
 
-    @DeleteMapping
-    public void deleteNote() {
+    @DeleteMapping("/{note_id}")
+    public ResponseEntity deleteNote(@RequestHeader(value="X-AUTH-TOKEN") String accessToken, @PathVariable("note_id") Integer noteId) {
         // 1. 인증 후
+        if(jwtTokenProvider.validateToken(accessToken)) {
+            // 2. 현재 사용자와 글 작성자가 같은지 확인
+            String userId = jwtTokenProvider.parseClaims(accessToken).getSubject();
+            Integer requestUserId = userMapper.getUserByUserId(userId).get().getId();
+            NoteDetailDto targetNote = noteService.getNoteById(noteId);
+            Integer noteUserId = targetNote.getUserId();
 
-        // 2. 현재 사용자와 삭제할 글의 작성자가 같은지 확인
+            if(!requestUserId.equals(noteUserId)) {
+                String message = "작성자와 사용자 정보가 일치하지 않습니다.";
+                return new ResponseEntity(message, HttpStatus.FORBIDDEN);
+            }
+
+            // 3. 노트 삭제
+            noteService.deleteNote(noteId);
+
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+
+        } else {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
     }
-
-
-
 }
