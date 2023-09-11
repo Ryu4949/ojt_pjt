@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -23,6 +24,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserMapper userMapper;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -89,7 +92,7 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<TokenDto> signInUser(@RequestBody UserSignInDto userSignInDto) {
+    public ResponseEntity<HashMap> signInUser(@RequestBody UserSignInDto userSignInDto) {
         UserInfoDto user = userService.findUserByUserId(userSignInDto);
 
         if (user == null || !passwordEncoder.matches(userSignInDto.getPassword(), user.getPassword())) {
@@ -101,8 +104,11 @@ public class UserController {
                     .userId(userSignInDto.getUserId())
                     .password(userSignInDto.getPassword())
                     .build();
+            HashMap<String, Object> resultMap = new HashMap<>();
+            resultMap.put("token", userService.login(userRequestDto));
+            resultMap.put("userInfo", userMapper.getUserByUserId(userSignInDto.getUserId()));
 
-            return ResponseEntity.ok(userService.login(userRequestDto));
+            return ResponseEntity.ok(resultMap);
         }
     }
 
