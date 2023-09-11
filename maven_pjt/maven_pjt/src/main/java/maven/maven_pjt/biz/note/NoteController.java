@@ -73,16 +73,32 @@ public class NoteController {
         }
     }
 
-    @PutMapping
-    public void updateNote() {
-        // 1. 인증 후
-
-        // 2. 현재 사용자와 글 작성자가 같은지 확인
-
-        // 3. 수정된 내용 입력 후(id, 시간 등은 수정 불가)
+    @PutMapping("/{note_id}")
+    public ResponseEntity updateNote(@RequestHeader(value="X-AUTH-TOKEN") String accessToken, @RequestBody NoteRequestDto noteRequestDto, @PathVariable("note_id") Integer noteId) {
 
         // 4. 수정
+        // 1. 인증 후
+        if(jwtTokenProvider.validateToken(accessToken)) {
+            // 2. 현재 사용자와 글 작성자가 같은지 확인
+            String userId = jwtTokenProvider.parseClaims(accessToken).getSubject();
+            Integer requestUserId = userMapper.getUserByUserId(userId).get().getId();
+            NoteDetailDto targetNote = noteService.getNoteById(noteId);
+            Integer noteUserId = targetNote.getUserId();
 
+            if(!requestUserId.equals(noteUserId)) {
+                String message = "작성자와 사용자 정보가 일치하지 않습니다.";
+                return new ResponseEntity(message, HttpStatus.FORBIDDEN);
+            }
+
+            // 3. 수정된 내용 입력 후(id, 시간 등은 수정 불가)
+            noteRequestDto.setId(targetNote.getId());
+            noteService.updateNote(noteRequestDto);
+
+            return new ResponseEntity(HttpStatus.OK);
+
+        } else {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @DeleteMapping

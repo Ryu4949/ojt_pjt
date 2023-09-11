@@ -34,4 +34,9 @@ public class NoteService {
         return noteRequestDto.getId();
     }
 
+    public Integer updateNote(NoteRequestDto noteRequestDto) {
+        noteMapper.updateNote(noteRequestDto);
+        return noteRequestDto.getId();
+    }
+
 }

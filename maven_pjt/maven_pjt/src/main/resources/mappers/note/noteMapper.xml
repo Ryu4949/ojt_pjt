@@ -25,4 +25,14 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
     </insert>
+    <select id="updateNote">
+        UPDATE
+            NOTE
+        SET
+            title = #{title},
+            content = #{content},
+            update_date = NOW()
+        WHERE
+            id = #{id};
+    </select>
 </mapper>

@@ -15,4 +15,6 @@ public interface NoteMapper {
     List<Note> getAllNotes();
 
     Integer createNote(NoteRequestDto noteRequestDto);
+
+    Integer updateNote(NoteRequestDto noteRequestDto);
 }
