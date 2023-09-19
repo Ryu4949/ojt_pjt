@@ -25,7 +25,7 @@ public class NoteService {
         return noteMapper.getNoteById(noteId);
     }
 
-    public List<Note> getAllNotes() {
+    public List<NoteDetailDto> getAllNotes() {
         return noteMapper.getAllNotes();
     }
 

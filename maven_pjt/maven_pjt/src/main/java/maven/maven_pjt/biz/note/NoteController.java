@@ -32,7 +32,7 @@ public class NoteController {
         // 1. 인증 후
         if(jwtTokenProvider.validateToken(accessToken)) {
             String userId = jwtTokenProvider.parseClaims(accessToken).getSubject();
-            List<Note> result = noteService.getAllNotes();
+            List<NoteDetailDto> result = noteService.getAllNotes();
             HttpStatus status = HttpStatus.OK;
 
         // 2. 모든 게시글 가져오기

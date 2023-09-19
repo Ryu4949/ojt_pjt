@@ -14,6 +14,7 @@ public class NoteDetailDto {
     private String title;
     private String content;
     private int userId;
+    private String userName;
     private LocalDate createDate;
     private LocalDate updateDate;
 }

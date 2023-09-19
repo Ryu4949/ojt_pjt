@@ -4,17 +4,37 @@
 <mapper namespace="maven.maven_pjt.biz.note.NoteMapper">
     <select id="getNoteById" resultType="maven.maven_pjt.biz.note.dto.NoteDetailDto">
         SELECT
-            *
+            N.id as id,
+            N.title as title,
+            N.content as content,
+            N.userId as userId,
+            U.name as userName,
+            N.create_date as createDate,
+            N.update_date as updateDate
         FROM
-            NOTE
+            NOTE N
+        LEFT JOIN
+            USERS U
+        ON
+            N.userId = U.id
         WHERE
             id = #{noteId};
     </select>
     <select id="getAllNotes" resultType="hashmap">
         SELECT
-            *
+            N.id as id,
+            N.title as title,
+            N.content as content,
+            N.userId as userId,
+            U.name as userName,
+            N.create_date as createDate,
+            N.update_date as updateDate
         FROM
-            NOTE;
+            NOTE N
+        LEFT JOIN
+            USERS U
+        ON
+            N.userId = U.id;
     </select>
     <insert id="createNote" parameterType="maven.maven_pjt.biz.note.dto.NoteRequestDto" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO

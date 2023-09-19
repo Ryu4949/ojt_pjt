@@ -12,7 +12,7 @@ import java.util.List;
 public interface NoteMapper {
     NoteDetailDto getNoteById(Integer noteId);
 
-    List<Note> getAllNotes();
+    List<NoteDetailDto> getAllNotes();
 
     Integer createNote(NoteRequestDto noteRequestDto);
 
