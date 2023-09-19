@@ -43,4 +43,7 @@ public class NoteService {
         noteMapper.deleteNote(noteId);
     }
 
+    public void setNullBeforeDeleteNotes(Integer userId) {
+        noteMapper.setNullBeforeDeleteNotes(userId);
+    };
 }

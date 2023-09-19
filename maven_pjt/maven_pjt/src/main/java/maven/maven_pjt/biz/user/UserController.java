@@ -1,5 +1,6 @@
 package maven.maven_pjt.biz.user;
 
+import maven.maven_pjt.biz.note.NoteService;
 import maven.maven_pjt.biz.user.dto.*;
 import maven.maven_pjt.biz.user.exception.UserAlreadySignedUpException;
 import maven.maven_pjt.biz.user.exception.UserNotFoundException;
@@ -26,6 +27,9 @@ public class UserController {
     private UserService userService;
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private NoteService noteService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -59,6 +63,7 @@ public class UserController {
     public ResponseEntity deleteUser(@PathVariable("user_id") Integer userId) throws UserNotFoundException {
         try {
             HttpStatus status = HttpStatus.NO_CONTENT;
+            noteService.setNullBeforeDeleteNotes(userId);
             Integer result = userService.deleteUser(userId);
             return new ResponseEntity(result, status);
 

@@ -41,4 +41,12 @@
         WHERE
             id = #{noteId};
     </select>
+    <select id="setNullBeforeDeleteNotes" parameterType="Integer">
+        UPDATE
+            NOTE
+        SET
+            userId = NULL
+        WHERE
+            userId = #{userId};
+    </select>
 </mapper>

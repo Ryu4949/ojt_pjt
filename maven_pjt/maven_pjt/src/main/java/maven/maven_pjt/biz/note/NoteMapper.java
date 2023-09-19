@@ -19,4 +19,7 @@ public interface NoteMapper {
     Integer updateNote(NoteRequestDto noteRequestDto);
 
     void deleteNote(Integer noteId);
+
+    void setNullBeforeDeleteNotes(Integer userId);
+
 }
