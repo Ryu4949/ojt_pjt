@@ -18,7 +18,7 @@
         ON
             N.userId = U.id
         WHERE
-            id = #{noteId};
+            N.id = #{noteId};
     </select>
     <select id="getAllNotes" resultType="hashmap">
         SELECT
