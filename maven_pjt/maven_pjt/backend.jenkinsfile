@@ -17,7 +17,7 @@ pipeline {
                 git branch: 'main', credentialsId: 'github_access_token', url: 'https://github.com/Ryu4949/ojt_pjt'
 
                 // Run Maven on a Unix agent.
-                // sh "mvn -Dmaven.test.failure.ignore=true clean package"d/
+                // sh "mvn -Dmaven.test.failure.ignore=true clean package"d/d
 
                 // To run Maven on a Windows agent, use
                 // bat "mvn -Dmaven.test.failure.ignore=true clean package"
