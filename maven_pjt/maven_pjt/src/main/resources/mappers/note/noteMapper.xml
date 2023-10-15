@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="maven.maven_pjt.biz.note.NoteMapper">
+    <select id="getNoteById" resultType="maven.maven_pjt.biz.note.dto.NoteDetailDto">
+        SELECT
+            N.id as id,
+            N.title as title,
+            N.content as content,
+            N.userId as userId,
+            U.name as userName,
+            N.create_date as createDate,
+            N.update_date as updateDate
+        FROM
+            NOTE N
+        LEFT JOIN
+            USERS U
+        ON
+            N.userId = U.id
+        WHERE
+            N.id = #{noteId};
+    </select>
+    <select id="getAllNotes" resultType="hashmap">
+        SELECT
+            N.id as id,
+            N.title as title,
+            N.content as content,
+            N.userId as userId,
+            U.name as userName,
+            N.create_date as createDate,
+            N.update_date as updateDate
+        FROM
+            NOTE N
+        LEFT JOIN
+            USERS U
+        ON
+            N.userId = U.id;
+    </select>
+    <insert id="createNote" parameterType="maven.maven_pjt.biz.note.dto.NoteRequestDto" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+            NOTE (title, content, userId, create_date, update_date)
+        VALUES (#{title}, #{content}, #{userId}, NOW(), NOW()
+        );
+        <selectKey resultType="Integer" keyProperty="id" keyColumn="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+    <select id="updateNote">
+        UPDATE
+            NOTE
+        SET
+            title = #{title},
+            content = #{content},
+            update_date = NOW()
+        WHERE
+            id = #{id};
+    </select>
+    <select id="deleteNote">
+        DELETE FROM
+            NOTE
+        WHERE
+            id = #{noteId};
+    </select>
+    <select id="setNullBeforeDeleteNotes" parameterType="Integer">
+        UPDATE
+            NOTE
+        SET
+            userId = NULL
+        WHERE
+            userId = #{userId};
+    </select>
+</mapper>
